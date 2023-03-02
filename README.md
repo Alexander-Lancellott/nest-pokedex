@@ -4,26 +4,27 @@
 
 # Ejecutar en desarrollo
 
-1. Clonar el repositorio
-2. Ejecutar
+:one: Clonar el repositorio 
+<br />
+:two: Ejecutar</br>
 
 ```
 Yarn install
 ```
 
-3. Tener Nest CLI instalado
+:three: Tener Nest CLI instalado
 
 ```
 npm i -g @nestjs/cli
 ```
 
-4. Levantar la base de datos
+:four: Levantar la base de datos
 
 ```
 docker-compose up -d
 ```
 
-5. Levantar el API REST
+:five: Levantar el API REST
 
 ```
 yarn start:dev
