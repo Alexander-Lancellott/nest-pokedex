@@ -6,7 +6,7 @@
 
 :one: Clonar el repositorio 
 <br />
-:two: Ejecutar</br>
+:two: Ejecutar
 
 ```
 Yarn install
