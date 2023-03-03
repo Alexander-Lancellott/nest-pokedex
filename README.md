@@ -53,3 +53,12 @@ http://localhost:3000/api/v2/seed?deleteType=hard
 - Docker
 - Prettier
 - ESLint
+
+# Notas
+
+Heroku redeploy sin cambios:
+
+```
+git commit --allow-empty -m "Tigger Heroku deploy"
+git push heroku master
+```
