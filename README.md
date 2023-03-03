@@ -4,7 +4,7 @@
 
 # Ejecutar en desarrollo
 
-:one: Clonar el repositorio 
+:one: Clonar el repositorio
 <br />
 :two: Ejecutar
 
@@ -24,7 +24,21 @@ npm i -g @nestjs/cli
 docker-compose up -d
 ```
 
-:five: Levantar el API REST
+:five: Reconstruir la base de datos
+
+> Elimina unicamente la seed que se inserto o los datos que coincidan con la seed a insertar y luego inserta la seed
+
+```
+http://localhost:3000/api/v2/seed
+```
+
+> Elimina todos los datos y luego inserta la seed
+
+```
+http://localhost:3000/api/v2/seed?deleteType=hard
+```
+
+:six: Levantar el API REST
 
 ```
 yarn start:dev

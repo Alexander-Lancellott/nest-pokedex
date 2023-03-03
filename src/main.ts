@@ -9,6 +9,11 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
+      //May cause lower performance than using @Type to transform types on DTOS
+      /*transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },*/
     }),
   );
   await app.listen(3000);

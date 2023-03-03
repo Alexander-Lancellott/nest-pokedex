@@ -9,6 +9,7 @@ import { isValidObjectId, Model } from 'mongoose';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { Pokemon } from './entities/pokemon.entity';
+import { PagintionDto } from '../common/dto/pagination.dto';
 
 @Injectable()
 export class PokemonService {
@@ -31,7 +32,7 @@ export class PokemonService {
     }
     console.log(error);
     throw new InternalServerErrorException(
-      `Can't create Pokemon - Check server logs`,
+      `Unexpected error - Check server logs`,
     );
   }
 
@@ -45,8 +46,24 @@ export class PokemonService {
     }
   }
 
-  findAll() {
-    return `This action returns all pokemon`;
+  async findAll(pagintionDto: PagintionDto) {
+    const { limit = 10, page = 1 } = pagintionDto;
+    const pokemons = await this.pokemonModel
+      .find()
+      .limit(limit)
+      .skip((page - 1) * limit)
+      .sort({ no: 1 })
+      .select('-__v');
+
+    const total = await this.pokemonModel.estimatedDocumentCount();
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      total,
+      totalPages,
+      page,
+      pokemons,
+    };
   }
 
   async findOne(term: string) {
@@ -98,5 +115,21 @@ export class PokemonService {
     }
 
     return result;
+  }
+
+  async fillPokemonWithSeedData(pokemons: Pokemon[], deleteType: string) {
+    try {
+      if (deleteType.toLowerCase() === 'hard') {
+        await this.pokemonModel.deleteMany({});
+      } else {
+        const names = [];
+        pokemons.forEach(({ name }) => names.push(name));
+        await this.pokemonModel.deleteMany({ name: { $in: names } });
+      }
+      const result = await this.pokemonModel.insertMany(pokemons);
+      return result;
+    } catch (error) {
+      this.handleExceptions(error);
+    }
   }
 }

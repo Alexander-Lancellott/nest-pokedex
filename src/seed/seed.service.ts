@@ -1,26 +1,44 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
 import { PokeResponse } from './interfaces/poke-response.interface';
+import { PokemonService } from '../pokemon/pokemon.service';
+import { AxiosAdapter } from '../common/adapters/axios.adapter';
+import { SeedDto } from './dto/seed.dto';
 
 @Injectable()
 export class SeedService {
+  constructor(
+    private readonly pokemonService: PokemonService,
+    private readonly http: AxiosAdapter,
+  ) {}
+
   private readonly axios: AxiosInstance = axios;
 
-  async executeSeed() {
-    const { data } = await this.axios.get<PokeResponse>(
-      'https://pokeapi.co/api/v2/pokemon?limit=10',
+  async executeSeed(seedDto: SeedDto) {
+    const { deleteType = '' } = seedDto;
+    const data = await this.http.get<PokeResponse>(
+      'https://pokeapi.co/api/v2/pokemon?limit=650',
     );
 
-    //const transformData = [];
+    const transformedData = [];
 
     data.results.forEach(({ name, url }) => {
       const segments = url.split('/');
       const no = +segments[segments.length - 2];
-      console.log({ name, no });
-      //transformData.push({ name, no });
+      transformedData.push({ name, no });
     });
 
-    //return transformData;
-    //return 'Seed executed';
+    const insertedPokemons = await this.pokemonService.fillPokemonWithSeedData(
+      transformedData,
+      deleteType,
+    );
+
+    return {
+      message:
+        deleteType.toLocaleLowerCase() === 'hard'
+          ? 'Hard seed executed'
+          : 'Seed executed',
+      insertedPokemons,
+    };
   }
 }
