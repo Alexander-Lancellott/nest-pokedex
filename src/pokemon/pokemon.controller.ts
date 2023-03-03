@@ -7,8 +7,6 @@ import {
   Param,
   Delete,
   Query,
-  UsePipes,
-  ValidationPipe,
   //HttpCode,
   //HttpStatus,
 } from '@nestjs/common';

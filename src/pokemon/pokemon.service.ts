@@ -10,13 +10,19 @@ import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { Pokemon } from './entities/pokemon.entity';
 import { PagintionDto } from '../common/dto/pagination.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PokemonService {
+  private defaultLimit: number;
+
   constructor(
     @InjectModel(Pokemon.name)
     private readonly pokemonModel: Model<Pokemon>,
-  ) {}
+    private readonly configService: ConfigService,
+  ) {
+    this.defaultLimit = configService.get('defaultLimit');
+  }
 
   private formatJsonStringify(value: string) {
     const unquoted = value.replace(/"([^"]+)":/g, '$1: ');
@@ -47,7 +53,7 @@ export class PokemonService {
   }
 
   async findAll(pagintionDto: PagintionDto) {
-    const { limit = 10, page = 1 } = pagintionDto;
+    const { limit = this.defaultLimit, page = 1 } = pagintionDto;
     const pokemons = await this.pokemonModel
       .find()
       .limit(limit)
