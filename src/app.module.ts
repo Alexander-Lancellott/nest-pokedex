@@ -9,15 +9,19 @@ import { CommonModule } from './common/common.module';
 import { SeedModule } from './seed/seed.module';
 import { EnvConfiguration } from 'config/env.config';
 
-const configService = new ConfigService();
-
 @Module({
   imports: [
-    ConfigModule.forRoot({ load: [EnvConfiguration] }),
+    ConfigModule.forRoot({ isGlobal: true, load: [EnvConfiguration] }),
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'public'),
     }),
-    MongooseModule.forRoot(configService.getOrThrow<string>('mongodb')),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.getOrThrow<string>('mongodb'),
+      }),
+      inject: [ConfigService],
+    }),
     PokemonModule,
     CommonModule,
     SeedModule,

@@ -5,9 +5,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const configService = new ConfigService();
+  const configService = await app.get<ConfigService>(ConfigService);
   const logger = new Logger('Bootstrap');
-  const port = configService.get<number>('port');
+  const port = await configService.get('port');
   app.setGlobalPrefix('api/v2');
   app.useGlobalPipes(
     new ValidationPipe({
@@ -20,7 +20,7 @@ async function bootstrap() {
       },*/
     }),
   );
-  await app.listen(port, '0.0.0.0');
-  logger.log(`App is running on: ${await app.getUrl()}`);
+  await app.listen(port);
+  logger.log(`App is running on port: ${port}`);
 }
 bootstrap();
