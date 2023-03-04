@@ -5,9 +5,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const configService = await app.get<ConfigService>(ConfigService);
+  const configService = app.get<ConfigService>(ConfigService);
   const logger = new Logger('Bootstrap');
-  const port = await configService.get('port');
+  const port = configService.get('port');
   app.setGlobalPrefix('api/v2');
   app.useGlobalPipes(
     new ValidationPipe({
