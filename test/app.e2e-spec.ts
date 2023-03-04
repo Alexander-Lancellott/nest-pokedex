@@ -27,7 +27,7 @@ describe('AppController (e2e)', () => {
         const textElement = doc.window.document.getElementById('title');
         if (!textElement) {
           throw new Error('Title id not found');
-        } else if (textElement.textContent !== 'Este es mi sitio web')
+        } else if (textElement.textContent !== 'Pokedex API')
           throw new Error('Unexpected title');
       });
   });
