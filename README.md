@@ -60,6 +60,18 @@ http://localhost:3000/api/v2/seed?deleteType=hard
 - Prettier
 - ESLint
 
+# Production Container Build con Docker
+
+:one: Crear el archivo **.env.prod**
+
+:two: Llenar las variables de entorno de prod
+
+:three: Crear la nueva imagen
+
+```
+docker-compose -f docker-compose.prod.yaml --env-file .env.prod up --build
+```
+
 # Documentación
 
 ```
