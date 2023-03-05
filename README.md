@@ -62,3 +62,9 @@ Heroku redeploy sin cambios:
 git commit --allow-empty -m "Tigger Heroku deploy"
 git push heroku master
 ```
+
+# Documentación
+
+```
+http://localhost:3000/doc
+```

@@ -1,6 +1,8 @@
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -20,6 +22,16 @@ async function bootstrap() {
       },*/
     }),
   );
+  const config = new DocumentBuilder()
+    .setTitle('Pokedex')
+    .setVersion('2.0')
+    .addTag('pokemon')
+    .addTag('seed')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('doc', app, document, {
+    customCssUrl: '/css/custom.css',
+  });
   await app.listen(port, '0.0.0.0');
   logger.log(`App is running on: ${await app.getUrl()}`);
 }
