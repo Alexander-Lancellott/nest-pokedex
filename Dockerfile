@@ -22,6 +22,8 @@ WORKDIR /usr/src/app
 
 COPY package.json yarn.lock ./
 
+COPY ./public ./public
+
 RUN yarn install --prod
 
 COPY --from=builder /app/dist ./dist
