@@ -8,8 +8,8 @@ export const termParamDefinition: ApiParamOptions = {
 export const pokemonBodyExample = (type: any) => {
   const example: ApiBodyOptions = {
     examples: {
-      Bulbasaur: { value: { no: 1, name: 'bulbasaur' } },
-      Pikachu: { value: { no: 25, name: 'pikachu' } },
+      Bulbasaur: { value: { name: 'bulbasaur', no: 1 } },
+      Pikachu: { value: { name: 'pikachu', no: 25 } },
     },
     type,
   };
