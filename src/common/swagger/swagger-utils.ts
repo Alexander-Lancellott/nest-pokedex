@@ -21,7 +21,7 @@ export const pokemonBodyExample = (type: any) => {
 export const updateDocs = () => {
   if (process.env.NODE_ENV === 'development') {
     get(
-      `http://localhost:${process.env.PORT}/docs/swagger-ui-bundle.js`,
+      `http://localhost:${process.env.PORT}/doc/swagger-ui-bundle.js`,
       function (response) {
         response.pipe(createWriteStream('public/docs/swagger-ui-bundle.js'));
         console.log(
@@ -31,7 +31,7 @@ export const updateDocs = () => {
     );
 
     get(
-      `http://localhost:${process.env.PORT}/docs/swagger-ui-init.js`,
+      `http://localhost:${process.env.PORT}/doc/swagger-ui-init.js`,
       function (response) {
         response.pipe(createWriteStream('public/docs/swagger-ui-init.js'));
         console.log(
@@ -41,7 +41,7 @@ export const updateDocs = () => {
     );
 
     get(
-      `http://localhost:${process.env.PORT}/docs/swagger-ui-standalone-preset.js`,
+      `http://localhost:${process.env.PORT}/doc/swagger-ui-standalone-preset.js`,
       function (response) {
         response.pipe(
           createWriteStream('public/docs/swagger-ui-standalone-preset.js'),
@@ -53,7 +53,7 @@ export const updateDocs = () => {
     );
 
     get(
-      `http://localhost:${process.env.PORT}/docs/swagger-ui.css`,
+      `http://localhost:${process.env.PORT}/doc/swagger-ui.css`,
       function (response) {
         response.pipe(createWriteStream('public/docs/swagger-ui.css'));
         console.log(
