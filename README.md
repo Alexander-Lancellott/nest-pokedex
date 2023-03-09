@@ -5,7 +5,7 @@
 # Demo
 
 ```
-https://nest-pokedex-avl.up.railway.app
+https://nest-pokedex-avl.vercel.app
 ```
 
 # Ejecutar en desarrollo
