@@ -11,7 +11,7 @@ window.onload = function() {
   "swaggerDoc": {
     "openapi": "3.0.0",
     "paths": {
-      "/api/v1/pokemon": {
+      "/api/v2/pokemon": {
         "post": {
           "operationId": "PokemonController_create",
           "parameters": [],
@@ -21,6 +21,20 @@ window.onload = function() {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CreatePokemonDto"
+                },
+                "examples": {
+                  "Bulbasaur": {
+                    "value": {
+                      "name": "bulbasaur",
+                      "no": 1
+                    }
+                  },
+                  "Pikachu": {
+                    "value": {
+                      "name": "pikachu",
+                      "no": 25
+                    }
+                  }
                 }
               }
             }
@@ -31,23 +45,40 @@ window.onload = function() {
             }
           },
           "tags": [
-            "Pokemon"
+            "pokemon"
           ]
         },
         "get": {
           "operationId": "PokemonController_findAll",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
           "responses": {
             "200": {
               "description": ""
             }
           },
           "tags": [
-            "Pokemon"
+            "pokemon"
           ]
         }
       },
-      "/api/v1/pokemon/{term}": {
+      "/api/v2/pokemon/{term}": {
         "get": {
           "operationId": "PokemonController_findOne",
           "parameters": [
@@ -55,6 +86,7 @@ window.onload = function() {
               "name": "term",
               "required": true,
               "in": "path",
+              "description": "Can be 'id', 'name' or 'no'",
               "schema": {
                 "type": "string"
               }
@@ -66,7 +98,7 @@ window.onload = function() {
             }
           },
           "tags": [
-            "Pokemon"
+            "pokemon"
           ]
         },
         "patch": {
@@ -76,6 +108,7 @@ window.onload = function() {
               "name": "term",
               "required": true,
               "in": "path",
+              "description": "Can be 'id', 'name' or 'no'",
               "schema": {
                 "type": "string"
               }
@@ -87,6 +120,20 @@ window.onload = function() {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UpdatePokemonDto"
+                },
+                "examples": {
+                  "Bulbasaur": {
+                    "value": {
+                      "name": "bulbasaur",
+                      "no": 1
+                    }
+                  },
+                  "Pikachu": {
+                    "value": {
+                      "name": "pikachu",
+                      "no": 25
+                    }
+                  }
                 }
               }
             }
@@ -97,34 +144,13 @@ window.onload = function() {
             }
           },
           "tags": [
-            "Pokemon"
-          ]
-        },
-        "delete": {
-          "operationId": "PokemonController_remove",
-          "parameters": [
-            {
-              "name": "term",
-              "required": true,
-              "in": "path",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "204": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "Pokemon"
+            "pokemon"
           ]
         }
       },
-      "/api/v1/pokemon/delete/{id}": {
+      "/api/v2/pokemon/{id}": {
         "delete": {
-          "operationId": "PokemonController_destroy",
+          "operationId": "PokemonController_remove",
           "parameters": [
             {
               "name": "id",
@@ -136,36 +162,52 @@ window.onload = function() {
             }
           ],
           "responses": {
-            "204": {
+            "200": {
               "description": ""
             }
           },
           "tags": [
-            "Pokemon"
+            "pokemon"
           ]
         }
       },
-      "/api/v1/seed": {
+      "/api/v2/seed": {
         "get": {
           "operationId": "SeedController_executeSeed",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "deleteType",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
           "responses": {
             "200": {
               "description": ""
             }
-          }
+          },
+          "tags": [
+            "seed"
+          ]
         }
       }
     },
     "info": {
-      "title": "Pokemon API",
-      "description": "Simple API for Pokemon",
-      "version": "1.0",
+      "title": "Pokedex",
+      "description": "",
+      "version": "2.0",
       "contact": {}
     },
     "tags": [
       {
-        "name": "Pokemon",
+        "name": "pokemon",
+        "description": ""
+      },
+      {
+        "name": "seed",
         "description": ""
       }
     ],
@@ -175,21 +217,28 @@ window.onload = function() {
         "CreatePokemonDto": {
           "type": "object",
           "properties": {
+            "no": {
+              "type": "number"
+            },
             "name": {
               "type": "string"
-            },
-            "pokemon_number": {
-              "type": "number"
             }
           },
           "required": [
-            "name",
-            "pokemon_number"
+            "no",
+            "name"
           ]
         },
         "UpdatePokemonDto": {
           "type": "object",
-          "properties": {}
+          "properties": {
+            "no": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
         }
       }
     }
