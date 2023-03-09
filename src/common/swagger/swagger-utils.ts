@@ -24,11 +24,7 @@ export const updateDocs = () => {
     get(
       `http://localhost:${process.env.PORT}/doc/swagger-ui-bundle.js`,
       function (response) {
-        response.pipe(
-          createWriteStream(
-            join(process.cwd(), 'public/docs/swagger-ui-bundle.js'),
-          ),
-        );
+        response.pipe(createWriteStream('public/docs/swagger-ui-bundle.js'));
         console.log(
           `Swagger UI bundle file written to: '/public/docs/swagger-ui-bundle.js'`,
         );
@@ -38,11 +34,7 @@ export const updateDocs = () => {
     get(
       `http://localhost:${process.env.PORT}/doc/swagger-ui-init.js`,
       function (response) {
-        response.pipe(
-          createWriteStream(
-            join(process.cwd(), 'public/docs/swagger-ui-bundle.js'),
-          ),
-        );
+        response.pipe(createWriteStream('public/docs/swagger-ui-bundle.js'));
         console.log(
           `Swagger UI init file written to: '/public/docs/swagger-ui-init.js'`,
         );
@@ -52,11 +44,7 @@ export const updateDocs = () => {
     get(
       `http://localhost:${process.env.PORT}/doc/swagger-ui-standalone-preset.js`,
       function (response) {
-        response.pipe(
-          createWriteStream(
-            join(process.cwd(), 'public/docs/swagger-ui-bundle.js'),
-          ),
-        );
+        response.pipe(createWriteStream('public/docs/swagger-ui-bundle.js'));
         console.log(
           `Swagger UI standalone preset file written to: '/public/docs/swagger-ui-standalone-preset.js'`,
         );
@@ -66,11 +54,7 @@ export const updateDocs = () => {
     get(
       `http://localhost:${process.env.PORT}/doc/swagger-ui.css`,
       function (response) {
-        response.pipe(
-          createWriteStream(
-            join(process.cwd(), 'public/docs/swagger-ui-bundle.js'),
-          ),
-        );
+        response.pipe(createWriteStream('public/docs/swagger-ui-bundle.js'));
         console.log(
           `Swagger UI css file written to: '/public/docs/swagger-ui.css'`,
         );
