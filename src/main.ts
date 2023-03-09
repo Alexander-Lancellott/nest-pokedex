@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
+import { updateDocs } from './common/swagger/swagger-utils';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -34,5 +35,6 @@ async function bootstrap() {
   });
   await app.listen(port, '0.0.0.0');
   logger.log(`App is running on: ${await app.getUrl()}`);
+  updateDocs();
 }
 bootstrap();
