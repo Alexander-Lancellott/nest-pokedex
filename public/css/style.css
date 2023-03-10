@@ -1,7 +1,9 @@
 body {
   padding: 10px;
-  background-image: url(/assets/background.svg);
-  background-repeat: no-repeat;
+  background: url(/assets/background.svg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
 }
 
@@ -33,7 +35,35 @@ h3 a {
   text-decoration: none;
 }
 
+@-moz-document url-prefix() {
+  h3,
+  h3 a {
+    -webkit-text-stroke-width: 3.5px;
+  }
+}
+
 h3 a:hover {
   color: #ffcc03;
   -webkit-text-stroke-color: #386abb;
+}
+
+@media screen and (max-width: 650px) {
+  h1 {
+    margin-top: 50px;
+    font-size: 40px;
+    letter-spacing: 0.6rem;
+    -webkit-text-stroke-width: 2px;
+  }
+
+  @-moz-document url-prefix() {
+    h1 {
+      -webkit-text-stroke-width: 4px;
+    }
+  }
+
+  h3 {
+    margin-top: 50px;
+    font-size: 20px;
+    letter-spacing: 0.2rem;
+  }
 }

@@ -7,18 +7,21 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { CommonModule } from './common/common.module';
 import { SeedModule } from './seed/seed.module';
-import { EnvConfiguration } from 'config/env.config';
+import { configValidationSchema } from './config/config.validation';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, load: [EnvConfiguration] }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: configValidationSchema,
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'public'),
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.getOrThrow<string>('mongodb'),
+        uri: configService.getOrThrow<string>('MONGODB'),
       }),
       inject: [ConfigService],
     }),

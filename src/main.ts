@@ -4,12 +4,14 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
+import { updateDoc } from './common/swagger/swagger-utils';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
   const logger = new Logger('Bootstrap');
-  const port = configService.get('port');
+  const port = configService.get('PORT');
+  const swaggerUpdate = configService.get('SWAGGER_UPDATE');
   app.setGlobalPrefix('api/v2');
   app.useGlobalPipes(
     new ValidationPipe({
@@ -34,5 +36,6 @@ async function bootstrap() {
   });
   await app.listen(port, '0.0.0.0');
   logger.log(`App is running on: ${await app.getUrl()}`);
+  updateDoc(swaggerUpdate, port);
 }
 bootstrap();
