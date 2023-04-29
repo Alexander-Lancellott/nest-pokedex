@@ -1,10 +1,15 @@
-import { ValidationPipe, Logger } from '@nestjs/common';
+import { ValidationPipe, Logger, INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
 import { updateDoc } from './common/swagger/swagger-utils';
+
+const parseAppUrl = async (app: INestApplication) => {
+  const url = await app.getUrl();
+  return url.replace(/\[::1]|127.0.0.1/, 'localhost');
+};
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -34,8 +39,8 @@ async function bootstrap() {
   SwaggerModule.setup('doc', app, document, {
     customCssUrl: '/css/custom.css',
   });
-  await app.listen(port, '0.0.0.0');
-  logger.log(`App is running on: ${await app.getUrl()}`);
+  await app.listen(port);
+  logger.log(`App is running on: ${await parseAppUrl(app)}`);
   updateDoc(swaggerUpdate, port);
 }
 bootstrap();
